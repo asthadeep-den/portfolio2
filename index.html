@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#F5F1E8" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <title>Astha Deep — One desk for everything</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,21 +85,217 @@
     text-decoration:none;padding:11px 20px;border-radius:40px;transition:transform .2s,background .25s;display:inline-flex;align-items:center;gap:7px}
   .navcta:hover{background:var(--red);transform:translateY(-1px)}
 
+  /* ===================== MOBILE ===================== */
+  /* iOS safe areas, tap behaviour, no zoom jumps */
+  body{
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
+    -webkit-tap-highlight-color:rgba(200,74,57,.15);
+    -webkit-text-size-adjust:100%;
+    overflow-wrap:break-word;
+    word-break:break-word;
+  }
+  *{ -webkit-touch-callout:none }
+  /* keep links/buttons hand-shaped on touch too */
+  a,button{ touch-action:manipulation }
+
+  /* === Tablet down (≤920px) === */
   @media(max-width:920px){
-    header{padding:14px 18px;flex-wrap:wrap;gap:10px}
-    .tabs{order:3;width:100%;justify-content:space-between;overflow-x:auto;border-radius:40px}
-    .tab{padding:9px 12px;font-size:12px;flex:0 0 auto}
+    header{
+      padding:14px 16px calc(14px + env(safe-area-inset-top)) 16px;
+      padding-top:calc(14px + env(safe-area-inset-top));
+      flex-wrap:wrap;gap:12px;
+    }
+    .brand{order:1;flex:0 0 auto}
+    .navcta{order:2;flex:0 0 auto;padding:9px 14px;font-size:12px}
+    .tabs{
+      order:3;width:100%;
+      overflow-x:auto;overflow-y:hidden;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      justify-content:flex-start;flex-wrap:nowrap;
+      padding:5px 6px;
+    }
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{
+      flex:0 0 auto;padding:9px 14px;font-size:12.5px;
+      min-height:38px;
+    }
     .tab .tnum{display:none}
+    main{padding-top:128px}
+  }
+
+  /* === Phone (≤760px) === */
+  @media(max-width:760px){
+    /* HERO restructure — no more absolute placards */
+    .hero{
+      min-height:auto;
+      padding:24px 18px 56px;
+      display:block;
+      overflow:visible;
+    }
+    .hero-copy{
+      text-align:center;max-width:none;
+      padding:8px 4px 0;
+    }
+    .hero h1{font-size:clamp(40px,11vw,58px);line-height:1.04}
+    .hero p.sub{font-size:15.5px;line-height:1.55;margin-top:18px;max-width:none}
+    .eyebrow{font-size:10.5px;margin-bottom:18px}
+    .ctas{margin-top:24px;gap:10px}
+    .cta{padding:13px 22px;font-size:14px;min-height:46px;justify-content:center}
+    .hero-hint{margin-top:32px;font-size:10px}
+
+    /* Placards — clean 2x2 grid below the copy, NOT floating */
+    .placard{
+      position:static !important;
+      animation:none !important;
+      display:block;width:100%;
+      transform:rotate(var(--r,0deg));
+      margin:0;
+    }
+    .placard:hover{transform:rotate(var(--r,0deg))}
+    /* container for the 2x2 */
+    .placards-mobile-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-top:38px;
+      padding:0 4px;
+    }
+    .placards-mobile-grid .placard{ width:100% }
+    .stamp,.book-cover,.indexcard,.stickynote{width:100%;height:auto;min-height:185px}
+    .stamp .frame,.book-cover .bk,.indexcard .card,.stickynote .note{height:160px;padding:12px}
+    .stamp .stitle,.book-cover .bk h4,.indexcard .ititle{font-size:19px}
+    .stickynote .ntitle{font-size:24px;margin-top:6px}
+    .stickynote .nbody{font-size:14px}
+    .stickynote .narrow{font-size:18px}
+    .stamp .smeta,.book-cover .bk .btop,.book-cover .bk .bn,.indexcard .ilist{font-size:8.5px}
+    .indexcard .ilist{line-height:1.7}
+    .placard .pcap{font-size:14px;margin-top:6px}
+
+    /* sections */
+    .section{padding:30px 18px 70px}
+    .section-head{margin-bottom:30px;gap:10px}
+    .section-num{font-size:10px}
+    .section-title{font-size:clamp(32px,8.5vw,44px);line-height:1.04}
+    .section-lede{font-size:15.5px;margin-top:8px}
+
+    /* about */
+    .author-grid{gap:24px}
+    .prose p{font-size:18px;line-height:1.5}
+    .factcard{padding:20px;border-radius:14px}
+    .factcard .row{font-size:13px;padding:10px 0}
+
+    /* samples */
+    .samples-grid{gap:18px}
+    .sample-card{padding:22px;border-radius:16px}
+    .sample-card h3{font-size:22px}
+    .sample-card p{font-size:14px}
+    .sample-card .insight{font-size:14.5px;line-height:1.45}
+
+    /* skills + method */
+    .skill{padding:18px}
+    .skill h4{font-size:18px}
+    .skill li{font-size:13px}
+    .method{padding:22px;border-radius:16px}
+    .method h3{font-size:23px}
+    .method .mlede{font-size:14px}
+    .mstep{padding:12px 10px}
+    .mstep .mh{font-size:14.5px}
+    .mstep .md{font-size:11.5px}
+
+    /* read more */
+    .read-tabs{gap:6px;margin-bottom:22px}
+    .read-tab{padding:8px 13px;font-size:12px;min-height:38px}
+    .letter{padding:26px 22px;border-radius:16px}
+    .letter::before{inset:10px;border-radius:10px}
+    .letterhead{flex-direction:column;align-items:flex-start;gap:8px;padding-bottom:10px;margin-bottom:14px}
+    .letterhead .ln{font-size:21px}
+    .letterhead .lc{text-align:left;font-size:8.5px}
+    .letter .ldate{font-size:9.5px;margin-bottom:14px}
+    .letter h3{font-size:22px;margin-bottom:14px}
+    .letter p{font-size:15.5px;line-height:1.55;text-align:left}
+    .lwin{flex-direction:row;gap:12px;padding:9px 0}
+    .lwin .lp{font-size:16px;min-width:42px}
+    .lwin .lw{font-size:14px}
+    .lsign{font-size:26px}
+
+    /* footer */
+    footer{
+      padding:22px 18px calc(22px + env(safe-area-inset-bottom)) 18px;
+    }
+    .foot{flex-direction:column;align-items:flex-start;gap:14px;text-align:left}
+    .foot .l{font-size:14px}
+    .socials{width:100%;justify-content:flex-start}
+    .socials a{font-size:12px;padding:8px 12px;min-height:36px;display:inline-flex;align-items:center}
+    .foot .meta{font-size:10px}
+  }
+
+  /* === Small phone (≤380px) — extra tight === */
+  @media(max-width:380px){
+    .brand .bn{font-size:16px}
+    .navcta{padding:8px 12px;font-size:11.5px}
+    .tab{padding:8px 12px;font-size:12px}
+    .hero h1{font-size:36px}
+    .hero p.sub{font-size:15px}
+    /* single column on the smallest phones so each placard is fully readable */
+    .placards-mobile-grid{grid-template-columns:1fr;gap:16px;padding:0 4px;max-width:300px;margin-left:auto;margin-right:auto}
+    .stamp,.book-cover,.indexcard,.stickynote{min-height:175px}
+    .stamp .frame,.book-cover .bk,.indexcard .card,.stickynote .note{height:150px;padding:12px 14px}
+    .stamp .stitle,.book-cover .bk h4,.indexcard .ititle{font-size:18px}
+    .section-title{font-size:30px}
+    .prose p{font-size:17px}
+    .sample-card h3{font-size:20px}
+    /* stack hero CTAs full-width so they're easy to thumb */
+    .hero .ctas{flex-direction:column;align-items:stretch}
+    .hero .cta{width:100%}
+  }
+
+  /* Read-more sub-tabs — let them scroll horizontally on phones rather than wrap into a mess */
+  @media(max-width:760px){
+    .read-tabs{
+      flex-wrap:nowrap;justify-content:flex-start;
+      overflow-x:auto;-webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      margin:0 -18px 22px;padding:0 18px 4px;
+    }
+    .read-tabs::-webkit-scrollbar{display:none}
+    .read-tab{flex:0 0 auto;white-space:nowrap}
+  }
+
+  /* Make the placard captions more discoverable on touch (the arrow hint people miss) */
+  @media(hover:none){
+    .placard .pcap{opacity:.85}
+    .placard:active .pcap{opacity:1}
+  }
+
+  /* Touch devices — disable hover lift jankiness, ensure tap feels right */
+  @media(hover:none){
+    .placard:hover{transform:rotate(var(--r,0deg))}
+    .sample-card:hover{transform:none;box-shadow:0 1px 0 rgba(26,24,20,.04)}
+    .cta:hover,.navcta:hover{transform:none}
+    /* active-state feedback instead */
+    .placard:active{transform:rotate(0deg) scale(.97);transition:transform .15s}
+    .sample-card:active{transform:scale(.99);transition:transform .15s}
+    .cta:active,.navcta:active,.tab:active,.read-tab:active{opacity:.85;transition:opacity .15s}
+  }
+
+  /* Reduce motion respect */
+  @media(prefers-reduced-motion:reduce){
+    .placard,.eyebrow .dot,.factcard .now h6 .dot{animation:none !important}
+    .hero h1 .u::after{animation:none;transform:scaleX(1)}
+    .view{transition:none}
+    .rev{opacity:1;transform:none;transition:none}
   }
 
   /* VIEWS / WINDOWS */
-  main{padding-top:90px;min-height:100vh;position:relative}
+  main{padding-top:90px;min-height:100vh;min-height:100dvh;position:relative}
   .view{display:none;opacity:0;transition:opacity .55s ease}
   .view.active{display:block}
   .view.fade-in{opacity:1}
 
   /* HERO */
-  .hero{position:relative;min-height:calc(100vh - 90px);display:flex;align-items:center;justify-content:center;padding:40px 24px 90px;overflow:hidden}
+  .hero{position:relative;min-height:calc(100vh - 90px);min-height:calc(100dvh - 90px);display:flex;align-items:center;justify-content:center;padding:40px 24px 90px;overflow:hidden}
   .hero-copy{text-align:center;max-width:760px;position:relative;z-index:5}
   .eyebrow{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:24px;display:inline-flex;align-items:center;gap:9px}
   .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(200,74,57,.6);animation:p 2s infinite}
@@ -137,11 +336,10 @@
     .placard.tl{top:8%;left:2%}.placard.tr{top:6%;right:2%}
     .placard.bl{bottom:6%;left:2%}.placard.br{bottom:4%;right:2%}
   }
-  @media(max-width:760px){
-    .placard{position:static;display:block;margin:14px auto;animation:none;transform:rotate(var(--r))}
-    .hero{padding-top:24px}
-    .placards-mobile{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:42px;justify-items:center}
-  }
+
+  /* placards wrapper: on desktop it's "transparent" to layout (absolute placards
+     escape it); on mobile it becomes the 2x2 grid (see media queries below) */
+  .placards-mobile-grid{display:contents}
 
   /* placard sizes */
   .stamp,.book-cover,.indexcard,.stickynote{width:170px;height:200px}
@@ -341,52 +539,6 @@
   <!-- HOME -->
   <section class="view active" data-view="home">
     <div class="hero">
-      <!-- desktop placards positioned absolutely -->
-      <button class="placard tl" data-route="author" aria-label="About me">
-        <div class="stamp">
-          <div class="frame">
-            <div class="smeta">No. 01 · Author</div>
-            <div class="stitle">About <i>me</i></div>
-            <div class="smeta">Filed · 2026</div>
-          </div>
-          <div class="post">NALSAR · 26</div>
-          <span class="pcap">a portrait, briefly →</span>
-        </div>
-      </button>
-
-      <button class="placard tr" data-route="samples" aria-label="Work samples">
-        <div class="book-cover">
-          <div class="bk">
-            <div class="btop">02 · Selected Work</div>
-            <h4>Work<br><i>Samples</i></h4>
-            <div class="bn">Four artefacts — all live</div>
-          </div>
-          <span class="pcap">open the book →</span>
-        </div>
-      </button>
-
-      <button class="placard bl" data-route="skills" aria-label="Skills & method">
-        <div class="indexcard">
-          <div class="card">
-            <span class="iho"></span>
-            <div class="ititle">Skills <i>&amp;</i> method</div>
-            <div class="ilist">Consulting · Research<br>Build · Brand · D2C<br>Bleed &amp; Build</div>
-          </div>
-          <span class="pcap">flip the card →</span>
-        </div>
-      </button>
-
-      <button class="placard br" data-route="readmore" aria-label="Read more">
-        <div class="stickynote">
-          <div class="note">
-            <div class="ntitle">Read more</div>
-            <div class="nbody">Wins, the paper, the book, the people I led.</div>
-            <div class="narrow">↗</div>
-          </div>
-          <span class="pcap">peek the notes →</span>
-        </div>
-      </button>
-
       <div class="hero-copy">
         <div class="eyebrow rev"><span class="dot"></span>Portfolio · Bangalore, IN</div>
         <h1 class="rev d1">One desk<br><i class="u">for everything</i></h1>
@@ -396,6 +548,54 @@
           <a class="cta ghost" href="mailto:asthadeep07@gmail.com">Get in touch</a>
         </div>
         <div class="hero-hint rev d4">↑ ↗ ↙ ↘ &nbsp; four windows, one desk</div>
+      </div>
+
+      <!-- placards: absolute on desktop, 2x2 grid on mobile -->
+      <div class="placards-mobile-grid">
+        <button class="placard tl" data-route="author" aria-label="About me">
+          <div class="stamp">
+            <div class="frame">
+              <div class="smeta">No. 01 · Author</div>
+              <div class="stitle">About <i>me</i></div>
+              <div class="smeta">Filed · 2026</div>
+            </div>
+            <div class="post">NALSAR · 26</div>
+            <span class="pcap">a portrait, briefly →</span>
+          </div>
+        </button>
+
+        <button class="placard tr" data-route="samples" aria-label="Work samples">
+          <div class="book-cover">
+            <div class="bk">
+              <div class="btop">02 · Selected Work</div>
+              <h4>Work<br><i>Samples</i></h4>
+              <div class="bn">Four artefacts — all live</div>
+            </div>
+            <span class="pcap">open the book →</span>
+          </div>
+        </button>
+
+        <button class="placard bl" data-route="skills" aria-label="Skills &amp; method">
+          <div class="indexcard">
+            <div class="card">
+              <span class="iho"></span>
+              <div class="ititle">Skills <i>&amp;</i> method</div>
+              <div class="ilist">Consulting · Research<br>Build · Brand · D2C<br>Bleed &amp; Build</div>
+            </div>
+            <span class="pcap">flip the card →</span>
+          </div>
+        </button>
+
+        <button class="placard br" data-route="readmore" aria-label="Read more">
+          <div class="stickynote">
+            <div class="note">
+              <div class="ntitle">Read more</div>
+              <div class="nbody">Wins, the paper, the book, the people I led.</div>
+              <div class="narrow">↗</div>
+            </div>
+            <span class="pcap">peek the notes →</span>
+          </div>
+        </button>
       </div>
     </div>
   </section>
